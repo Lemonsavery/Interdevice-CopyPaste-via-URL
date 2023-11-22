@@ -21,7 +21,7 @@
 
 		function getURLsafeStringFromURL() {
 			let queryParams = new URLSearchParams(window.location.search);
-			return queryParams.get(QUERY_KEY);
+			return queryParams.get(QUERY_KEY) || "";
 		}
 		function URLsafeStringToText(URL_safe_string) {
 			return decodeURI(URL_safe_string);
