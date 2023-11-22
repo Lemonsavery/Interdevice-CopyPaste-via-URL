@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Interdevice CopyPaste via URL</title>
+</head>
+<body>
+	<textarea id="theTextArea"></textarea>
+
+	<script>
+		const QUERY_KEY = "t";
+		function textToURLsafeString(text) {
+			return encodeURI(text);
+		}
+		function placeQueryStringOnURL(URL_safe_string) {
+			let queryParams = new URLSearchParams(window.location.search);
+			queryParams.set(QUERY_KEY, URL_safe_string);
+			history.replaceState(null, null, "?"+queryParams.toString());
+		}
+
+		function getURLsafeStringFromURL() {
+			let queryParams = new URLSearchParams(window.location.search);
+			return queryParams.get(QUERY_KEY);
+		}
+		function URLsafeStringToText(URL_safe_string) {
+			return decodeURI(URL_safe_string);
+		}
+
+
+		const theTextArea = document.getElementById("theTextArea");
+		theTextArea.value = URLsafeStringToText(getURLsafeStringFromURL());
+		theTextArea.addEventListener("input", () => {
+			placeQueryStringOnURL(textToURLsafeString(theTextArea.value));
+		});
+	</script>
+
+	<style>
+		body {
+			height: 100vh;
+			margin: 0;
+			overflow: hidden;
+		}
+		#theTextArea {
+			width: 99%;
+			height: 99%;
+		}
+	</style>
+</body>
+</html>
