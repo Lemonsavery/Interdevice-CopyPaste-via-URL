@@ -28,11 +28,17 @@
 			return decodeURI(URL_safe_string);
 		}
 
+		function setPageTitleToText(text) {
+			document.title = text;
+		}
+
 
 		const theTextArea = document.getElementById("theTextArea");
 		theTextArea.value = URLsafeStringToText(getURLsafeStringFromURL());
+		setPageTitleToText(theTextArea.value);
 		theTextArea.addEventListener("input", () => {
 			placeQueryStringOnURL(textToURLsafeString(theTextArea.value));
+			setPageTitleToText(theTextArea.value);
 		});
 	</script>
 
